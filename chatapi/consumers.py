@@ -80,8 +80,18 @@ class ChatConsumer(WebsocketConsumer):
         msgSerializerData = MessageSerializer(
             instance=messages, many=True).data
 
-        self.send(text_data=json.dumps(
-            {"results": msgSerializerData, "type": "all"}))
+        # self.send(text_data=json.dumps(
+        #     {"results": msgSerializerData, "type": "all"}))
+
+        # Send message to room group
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+            {
+                'type': 'chat_message',
+                'message': msgSerializerData,
+                'msg_type': 'all'
+            }
+        )
 
 
 
@@ -129,10 +139,20 @@ class ChatConsumer(WebsocketConsumer):
                 sender=self.user, text=text, conv_id=self.conversation)
             self.conversation.last_msg = message
             self.conversation.save()
+        # archived
         if msg_type == 'delete':
             message = Message.objects.filter(
                 id=int(text_data_json['messageID'])).first()
             message.archived = True
+            if self.conversation.last_msg == message:
+                self.conversation.last_msg = message
+                self.conversation.save()
+            message.save()
+        # delete 
+        if msg_type == 'deleteall':
+            message = Message.objects.filter(
+                id=int(text_data_json['messageID'])).first()
+            message.deleted = True
             if self.conversation.last_msg == message:
                 self.conversation.last_msg = message
                 self.conversation.save()

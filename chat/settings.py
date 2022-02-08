@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-mcuz48%=b)6pc7^$e1aj5zkgrg*_tgf5@4mq=n&x(54ycy+x9p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["http://localhost:3000", "localhost"]
+ALLOWED_HOSTS = ["http://localhost:3000", "localhost","https://chatapp-front.netlify.app"]
 
 
 # Application definition
@@ -151,6 +151,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "https://chatapp-front.netlify.app",
 ]
 
 

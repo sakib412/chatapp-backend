@@ -22,6 +22,7 @@ class Message(models.Model):
     conv_id = models.ForeignKey(Conversation, on_delete=models.CASCADE)
     is_read = models.BooleanField(default=False)
     archived = models.BooleanField(default=False)
+    deleted = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:

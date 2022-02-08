@@ -6,7 +6,7 @@ class MessageSerializer(ModelSerializer):
     class Meta:
         model = Message
         fields = ['id', 'sender', 'text', 'is_read',
-                  'archived', 'timestamp', 'conv_id']
+                  'archived', 'timestamp', 'conv_id','deleted']
 
 
 class ConversationSerializer(ModelSerializer):
